@@ -1,0 +1,48 @@
+<!DOCTYPE html><html><head>
+<title>Criador de contatos</title>
+</head>
+<body>
+<p>Seu telefone com DDD <br>
+<textarea id="text-val" rows="1">11999999999</textarea><br>
+<input type="button" id="dwn-btn" value="Baixar contatos">
+
+<script type="text/javascript">
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}
+
+// Start file download.
+document.getElementById("dwn-btn").addEventListener("click", function(){
+    // Generate download of hello.txt file with some content
+    var phone = document.getElementById("text-val").value;
+    var txt1 = "BEGIN:VCARD\nVERSION:2.1\nN:;"; //nome aqui
+    var txt2 = ";;;\nTEL;CELL:"; //telefone aqui
+    var txt3 = "\nEND:VCARD\n";
+    
+    var txtFinal = "";
+    
+    var ddds = [11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 27, 28, 31, 
+                32, 33, 34, 35, 37, 38, 41, 42, 43, 44, 45, 46, 47, 48, 49, 
+                51, 53, 54, 55, 61, 62, 63, 64, 65, 66, 67, 68, 69, 71, 73, 
+                74, 75, 76, 77, 79, 81, 82, 83, 84, 85, 86, 87, 88, 89, 91, 
+                92, 93, 94, 95, 96, 97, 98, 99];
+                
+    var filename = "meu_numero.vcf";
+    phone = phone.replace(/[\ \-\(\)]/g, "");
+
+    for (i = 0; i < ddds.length; i++) {
+        if (phone.substring(0,2) != ddds[i]) {
+            txtFinal = txtFinal + txt1 + ddds[i] + txt2 + ddds[i] + phone.substring(2,11) + txt3;
+        }
+    } 
+    
+    download(filename, txtFinal);
+}, false);
+</script>
+</body></html>
